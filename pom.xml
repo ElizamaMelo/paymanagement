@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.3</version>
+		<version>2.7.12</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.exis</groupId>
@@ -58,6 +58,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>2.1.12</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -74,7 +79,29 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>6.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<skipValidateSpec>true</skipValidateSpec>
+							<inputSpec>./src/main/resources/openapi.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<configOptions>
+								<openApiNullable>false</openApiNullable>
+								<interfaceOnly>true</interfaceOnly>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+
 	</build>
 
 </project>

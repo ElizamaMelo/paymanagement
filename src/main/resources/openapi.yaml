@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: Payment Management API
+  version: 1.0.0
+paths:
+  /payments:
+    post:
+      summary: Register a new payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '201':
+          description: Payment created
+    get:
+      summary: List all payments
+      responses:
+        '200':
+          description: A list of payments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentListResponse'
+components:
+  schemas:
+    PaymentRequest:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+        amount:
+          type: number
+          format: double
+        paymentDate:
+          type: string
+          format: date
+        description:
+          type: string
+    PaymentListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/PaymentResponse'
+    PaymentResponse:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+        amount:
+          type: number
+          format: double
+        paymentDate:
+          type: string
+          format: date
+        description:
+          type: string
