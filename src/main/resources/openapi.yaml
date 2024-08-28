@@ -31,6 +31,9 @@ components:
       properties:
         cardNumber:
           type: string
+        userId:
+          type: integer
+          format: int64
         amount:
           type: number
           format: double
