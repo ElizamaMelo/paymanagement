@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RestController
@@ -20,16 +19,16 @@ public class PaymentController implements PaymentsApi {
     @Autowired
     private PaymentService service;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/paymentsGet/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<PaymentResponse>> paymentsGet(@PathVariable("userId") Long userId) {
         List<PaymentResponse> list = service.getMaskCardsByUser(userId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/paymentsPost")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> paymentsPost(@Valid @RequestBody PaymentRequest paymentRequest) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public ResponseEntity<Void> paymentsPost(@Valid @RequestBody PaymentRequest paymentRequest) {
         // Create the payment method
         service.save(paymentRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);

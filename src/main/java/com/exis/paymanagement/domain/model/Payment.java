@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -14,15 +13,21 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
+@Table(name = "payment")
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_generator")
+    @SequenceGenerator(name = "payment_generator", sequenceName = "payment_sequence", allocationSize = 1)
     private Long id;
 
-    private String cardNumber;
+
     private Double amount;
     private LocalDate paymentDate;
     private String description;
     private Long userId;
+
+    @ManyToOne
+    @JoinColumn(name = "card_id")  // Specifies the foreign key column in the Payment table
+    private Card card;
+
 }
